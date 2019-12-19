@@ -4,25 +4,35 @@ using UnityEngine;
 
 public static class Reproduction
 {
-    public static void Asexual(NeuralNetwork[] currentGen)
+    public static void Asexual(Agent[] currentGen)
     {
         int killOff = (int)(currentGen.Length * 0.5f);
-        int[] ordered = OrderAgentsFitness(currentGen);
+        int[] ordered = OrderAgentsOnRepoFitness(currentGen);
 
+        /*
+        Debug.ClearDeveloperConsole();
+        double total = 0;
+        for (int i = 0; i < currentGen.Length; i++)
+        {
+            total += currentGen[ordered[i]].ReproductionChance;
+            Debug.Log("Chance: " + currentGen[ordered[i]].ReproductionChance);
+        }
+        Debug.Log("total: " + total);
+        */
 
         for (int i = 0; i < killOff; i++)
         {
-            currentGen[ordered[i]].CopyNeuralNetwork(currentGen[ordered[i + killOff]]);
-            currentGen[ordered[i]].Mutate();
+            currentGen[ordered[i]].Brain.CopyNeuralNetwork(currentGen[ordered[i + killOff]].Brain);
+            currentGen[ordered[i]].Brain.Mutate();
         }
 
         for (int i = 0; i < currentGen.Length; i++)
         {
-            currentGen[i].SetFitness(0);
+            currentGen[i].SetFitness(10);
         }
     }
 
-    public static int[] OrderAgentsFitness(NeuralNetwork[] ags)
+    public static int[] OrderAgentsOnRepoFitness(Agent[] ags)
     {
         int[] ordered = new int[ags.Length];
         bool[] added = new bool[ags.Length];
@@ -30,14 +40,14 @@ public static class Reproduction
 
         for (int j = 0; j < ags.Length; j++)
         {
-            float lowestFit = float.MaxValue;
+            double lowestFitness = double.MaxValue;
             int minID = 0;
 
             for (int i = 0; i < ags.Length; i++)
             {
-                if (added[i] == false && ags[i].GetFitness() < lowestFit)
+                if (added[i] == false && ags[i].GetFitness() < lowestFitness)
                 {
-                    lowestFit = ags[i].GetFitness();
+                    lowestFitness = ags[i].GetFitness();
                     minID = i;
                 }
             }

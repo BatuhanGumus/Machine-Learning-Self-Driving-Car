@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CarManager : MonoBehaviour
 {
@@ -10,10 +11,10 @@ public class CarManager : MonoBehaviour
     public TrackBuilder tb;
     public GameObject carPrefab;
 
-    private int spawnAmount = 20;
+    private int spawnAmount = 30;
 
-    private Car[] agents;
-    private NeuralNetwork[] nns;
+    private Car[] cars;
+    private Agent[] agents;
     private int gen = 1;
 
     //========= for cars ===========
@@ -35,31 +36,31 @@ public class CarManager : MonoBehaviour
 
     public void SpawnCars()
     {
-        agents = new Car[spawnAmount];
-        nns = new NeuralNetwork[spawnAmount];
+        cars = new Car[spawnAmount];
+        agents = new Agent[spawnAmount];
 
         for (int i = 0; i < spawnAmount; i++)
         {
             GameObject hold = Instantiate(carPrefab, tb.spawnPos, Quaternion.identity);
 
-            agents[i] = hold.GetComponent<Car>();
-            agents[i].neuralNetwork = new NeuralNetwork(new int[] {10, 100, 30, 2});
-            agents[i].ID = i;
+            cars[i] = hold.GetComponent<Car>();
+            cars[i].agent = new Agent(new int[] {10, 20, 5, 2});
+            cars[i].ID = i;
 
-            nns[i] = agents[i].neuralNetwork;
+            agents[i] = cars[i].agent;
             hold.GetComponent<Car>().carManager = this;
         }
     }
 
     public void GenComplete()
     {
-        Reproduction.Asexual(nns);
+        Reproduction.Asexual(agents);
 
         for (int i = 0; i < spawnAmount; i++)
         {
-            agents[i].ResetAgent();
-            agents[i].transform.position = tb.spawnPos;
-            agents[i].transform.rotation = Quaternion.identity;
+            cars[i].ResetCar();
+            cars[i].transform.position = tb.spawnPos;
+            cars[i].transform.rotation = Quaternion.identity;
             
         }
         uim.UpdateGenCounter(++gen);
@@ -67,9 +68,9 @@ public class CarManager : MonoBehaviour
 
     public void CheckGenComplete()
     {
-        for (int i = 0; i < agents.Length; i++)
+        for (int i = 0; i < cars.Length; i++)
         {
-            if (agents[i].active == true)
+            if (cars[i].active == true)
             {
                 return;
             }
@@ -77,4 +78,6 @@ public class CarManager : MonoBehaviour
 
         GenComplete();
     }
+
+    
 }

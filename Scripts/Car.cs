@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
-    public NeuralNetwork neuralNetwork;
+    public Agent agent;
     public int ID;
 
     public Rigidbody2D rb;
@@ -26,7 +26,7 @@ public class Car : MonoBehaviour
         }
 
         
-        double[] outs = neuralNetwork.FeedForward(GetSensorData());
+        double[] outs = agent.Brain.FeedForward(GetSensorData());
         DriveCar((float)-outs[0], (float)outs[1]);
         
         /*
@@ -35,7 +35,7 @@ public class Car : MonoBehaviour
         DriveCar(xInp, yInp);
         */
 
-        neuralNetwork.AddFitness(-Time.fixedDeltaTime);
+        agent.AddFitness(-Time.fixedDeltaTime);
 
         if (currentSpeed < 0.2f)
         {
@@ -46,9 +46,9 @@ public class Car : MonoBehaviour
             stableTime = 0;
         }
 
-        if (stableTime > 5f || neuralNetwork.GetFitness() < -20)
+        if (stableTime > 5f || agent.GetFitness() < -20)
         {
-            neuralNetwork.AddFitness(carManager.stopPoints);
+            agent.AddFitness(carManager.stopPoints);
             ren.material.color = carManager.stopCol;
             active = false;
             carManager.CheckGenComplete();
@@ -110,7 +110,7 @@ public class Car : MonoBehaviour
         if (other.transform.CompareTag("Track"))
         {
             rb.velocity = Vector2.zero;
-            neuralNetwork.AddFitness(carManager.hitWallPoints);
+            agent.AddFitness(carManager.hitWallPoints);
             ren.material.color = carManager.crashCol;
             active = false;
             carManager.CheckGenComplete();
@@ -134,7 +134,7 @@ public class Car : MonoBehaviour
 
             if (newGate == true)
             {
-                neuralNetwork.AddFitness(carManager.rewardGatPoints);
+                agent.AddFitness(carManager.rewardGatPoints);
                 prevRewardGates.Add(other.transform);
             }
             
@@ -142,7 +142,7 @@ public class Car : MonoBehaviour
         
         if (other.transform.CompareTag("SpawnLane") && prevRewardGates.Count > 10)
         {
-            neuralNetwork.AddFitness(carManager.finishReward);
+            agent.AddFitness(carManager.finishReward);
             ren.material.color = carManager.lapDoneColor;
             active = false;
             carManager.CheckGenComplete();
@@ -150,7 +150,7 @@ public class Car : MonoBehaviour
         
     }
 
-    public void ResetAgent()
+    public void ResetCar()
     {
         active = true;
         ren.material.color = carManager.originalCol;
