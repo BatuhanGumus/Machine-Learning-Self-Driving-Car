@@ -11,7 +11,7 @@ public class CarManager : MonoBehaviour
     public TrackBuilder tb;
     public GameObject carPrefab;
 
-    private int spawnAmount = 30;
+    private int spawnAmount = 1;
 
     private Car[] cars;
     private Agent[] agents;

@@ -50,7 +50,6 @@ public static class NeuralNetworkSaver
                     wright += NN.biases[i][j] + seperator;
                 }
             }
-            wright += "\n";
             // ========================================
 
 
@@ -74,18 +73,17 @@ public static class NeuralNetworkSaver
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    Debug.Log(line);
+                   // Debug.Log(line);
                     string[] bits = line.Split(spearator, line.Length, StringSplitOptions.RemoveEmptyEntries);
 
-                   
+                   /*
                     for (int i = 0; i < bits.Length; i++)
                     {
                         Debug.Log(bits[i]);
                     }
-
+                    */
                     if (bits[0] == "Layer Sizes")
                     {
-                        Debug.Log(bits.Length - 1);
                         layer_sizes = new int[bits.Length - 1];
 
                         for (int i = 1; i < bits.Length; i++)
@@ -110,9 +108,22 @@ public static class NeuralNetworkSaver
                             }
                         }
                     }
-                    
+                    else if (bits[0] == "Biases" && retNN != null)
+                    {
+                        int count = 1;
+                        for (int i = 0; i < retNN.biases.Length; i++)
+                        {
+                            for (int j = 0; j < retNN.biases[i].Length; j++)
+                            {
+                                retNN.biases[i][j] = double.Parse(bits[count]);
+                                count++;
+                            }
+                        }
+                    }
                 }
-                // NeuralNetwork nnTemp = new NeuralNetwork();
+
+                return retNN;
+
             }
 
         }

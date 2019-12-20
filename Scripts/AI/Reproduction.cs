@@ -9,8 +9,6 @@ public static class Reproduction
         int killOff = (int)(currentGen.Length * 0.5f);
         int[] ordered = OrderAgentsOnRepoFitness(currentGen);
 
-        NeuralNetworkSaver.Save("NN1", currentGen[0].Brain);
-        NeuralNetworkSaver.Load("NN1");
         /*
         Debug.ClearDeveloperConsole();
         double total = 0;
