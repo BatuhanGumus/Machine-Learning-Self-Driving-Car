@@ -1971,7 +1971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tm: {fileID: 1416145409}
-  defaultTrack: {fileID: 8097821740253435639, guid: 9afd7bf8e24160340889c4db897b6d6c,
+  defaultTrack: {fileID: 862236081342461211, guid: 9afd7bf8e24160340889c4db897b6d6c,
     type: 3}
 --- !u!1001 &1463590966
 PrefabInstance:

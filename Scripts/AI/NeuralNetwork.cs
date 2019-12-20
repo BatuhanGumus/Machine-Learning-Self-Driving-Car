@@ -5,10 +5,10 @@ using Random = UnityEngine.Random;
 
 public class NeuralNetwork
 {
-    private int[] layerSizes; //layer sizes
+    public int[] layerSizes; //layer sizes
     private double[][] neurons; //neuron matrix
-    private double[][][] weights; //weight matrix
-    private double[][] biases; //weight matrix
+    public double[][][] weights; //weight matrix
+    public double[][] biases; //weight matrix
     
 
     public NeuralNetwork(int[] _layerSizes)
@@ -17,6 +17,16 @@ public class NeuralNetwork
 
         InitNeurons();
         InitWeights();
+    }
+
+    public NeuralNetwork(NeuralNetwork copyNN)
+    {
+        this.layerSizes = copyNN.layerSizes;
+
+        InitNeurons();
+        InitWeights();
+
+        CopyNeuralNetwork(copyNN);
     }
 
     void InitNeurons()
@@ -99,13 +109,15 @@ public class NeuralNetwork
     {
         double retVal = inp;
 
+        /*
         if (Random.value < 0.5f)
         {
             retVal += CustomRandValue(0.5, 0.5);
         }
-        return retVal;
+        */
+        float randomNumber = Random.Range(0f, 100f);
 
-        /*
+
         if (randomNumber <= 2f)
         { //if 1
             //flip sign of weight
@@ -128,7 +140,8 @@ public class NeuralNetwork
             float factor = UnityEngine.Random.Range(0f, 1f);
             retVal *= factor;
         }
-        */
+        
+        return retVal;
     }
 
     public void Mutate()/// Mutate neural network weights
