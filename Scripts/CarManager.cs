@@ -11,7 +11,7 @@ public class CarManager : MonoBehaviour
     public TrackBuilder tb;
     public GameObject carPrefab;
 
-    private int spawnAmount = 1;
+    private int spawnAmount = 30;
 
     private Car[] cars;
     private Agent[] agents;
@@ -44,7 +44,7 @@ public class CarManager : MonoBehaviour
             GameObject hold = Instantiate(carPrefab, tb.spawnPos, Quaternion.identity);
 
             cars[i] = hold.GetComponent<Car>();
-            cars[i].agent = new Agent(new int[] {10, 20, 5, 2});
+            cars[i].agent = new Agent(new int[] {9, 32, 8, 2});
             cars[i].ID = i;
 
             agents[i] = cars[i].agent;
@@ -75,8 +75,7 @@ public class CarManager : MonoBehaviour
                 return;
             }
         }
-
-        GenComplete();
+        Invoke("GenComplete", 1f);
     }
 
     

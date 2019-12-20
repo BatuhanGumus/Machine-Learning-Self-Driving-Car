@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public static class Reproduction
 {
     public static void Asexual(Agent[] currentGen)

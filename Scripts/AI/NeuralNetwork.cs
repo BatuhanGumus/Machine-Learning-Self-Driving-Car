@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System;
-using System.Diagnostics;
-using Random = UnityEngine.Random;
+﻿using System;
 
 public class NeuralNetwork
 {
@@ -9,7 +6,12 @@ public class NeuralNetwork
     private double[][] neurons; //neuron matrix
     public double[][][] weights; //weight matrix
     public double[][] biases; //weight matrix
-    
+
+    private static Random rand = new Random();
+    private double RandDouble(double min, double max)
+    {
+        return rand.NextDouble() * (max - min) + min;
+    }
 
     public NeuralNetwork(int[] _layerSizes)
     {
@@ -55,9 +57,9 @@ public class NeuralNetwork
                 weights[i - 1][j] = new double[layerSizes[i - 1]];
                 for (int k = 0; k < layerSizes[i - 1]; k++)
                 {
-                    weights[i - 1][j][k] = (double)UnityEngine.Random.Range(-0.5f, 0.5f);
+                    weights[i - 1][j][k] = RandDouble(-0.5, 0.5);
                 }
-                biases[i - 1][j] = (double)UnityEngine.Random.Range(-0.5f, 0.5f);
+                biases[i - 1][j] = RandDouble(-0.5, 0.5);
             }
         }
     }
@@ -101,43 +103,36 @@ public class NeuralNetwork
 
     private double CustomRandValue(double absMax, double variance)
     {
-        double x = Random.Range(-10f, 10f) / absMax;
-        return Math.Exp(-Math.Pow(x, 2.0)) * x * 2.331 * absMax;
+       double x = RandDouble(-10.0, 10.0) / absMax;
+       return Math.Exp(-Math.Pow(x, 2.0)) * x * 2.331 * absMax;
     }
 
     public double RandomizeWeight(double inp)
     {
         double retVal = inp;
 
-        /*
-        if (Random.value < 0.5f)
-        {
-            retVal += CustomRandValue(0.5, 0.5);
-        }
-        */
-        float randomNumber = Random.Range(0f, 100f);
+        double chance = RandDouble(0, 100.0);
 
-
-        if (randomNumber <= 2f)
+        if (chance <= 2f)
         { //if 1
             //flip sign of weight
             retVal *= -1f;
         }
-        else if (randomNumber <= 4f)
+        else if (chance <= 4f)
         { //if 2
             //pick random weight between -1 and 1
-            retVal = UnityEngine.Random.Range(-0.5f, 0.5f);
+            retVal = RandDouble(-0.5, 0.5);
         }
-        else if (randomNumber <= 6f)
+        else if (chance <= 6f)
         { //if 3
             //randomly increase by 0% to 100%
-            float factor = UnityEngine.Random.Range(0f, 1f) + 1f;
+            double factor = RandDouble(1.0, 2.0);
             retVal *= factor;
         }
-        else if (randomNumber <= 8f)
+        else if (chance <= 8f)
         { //if 4
             //randomly decrease by 0% to 100%
-            float factor = UnityEngine.Random.Range(0f, 1f);
+            double factor = RandDouble(0f, 1f);
             retVal *= factor;
         }
         

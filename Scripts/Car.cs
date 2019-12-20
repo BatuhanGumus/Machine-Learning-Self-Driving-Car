@@ -30,8 +30,9 @@ public class Car : MonoBehaviour
         DriveCar((float)-outs[0], (float)outs[1]);
         
         /*
-        xInp = -Input.GetAxis("Horizontal");
-        yInp = Input.GetAxis("Vertical");
+        GetSensorData();
+        float xInp = -Input.GetAxis("Horizontal");
+        float yInp = Input.GetAxis("Vertical");
         DriveCar(xInp, yInp);
         */
 
@@ -85,23 +86,22 @@ public class Car : MonoBehaviour
          currentSpeed = rb.velocity.magnitude;
     }
 
+
     private float[] GetSensorData()
     {
-        float[] data = new float[carManager.sensorDegrees.Length + 2];
+        float[] data = new float[carManager.sensorDegrees.Length + 1];
 
         for (int i = 0; i < carManager.sensorDegrees.Length; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Quaternion.Euler(0, 0, carManager.sensorDegrees[i]) * transform.up, Mathf.Infinity, carManager.trackMask);
             if (hit.collider != null)
             {
-                Debug.DrawLine(transform.position, hit.point);
-                data[i] = hit.distance; // normalize
+               // Debug.DrawLine(transform.position, hit.point);
+                data[i] = hit.distance / 10.0f;
             }
         }
         
-        Vector2 vel = rb.velocity;
-        data[data.Length - 2] = vel.x;
-        data[data.Length - 1] = vel.y;
+        data[data.Length - 1] = rb.velocity.magnitude / carManager.maxSpeed;
         return data;
     }
 
