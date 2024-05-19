@@ -4,7 +4,7 @@
 
 A gamified machine learning experience where the user gets to create a custom track and watch the AI learn its way through it.
 
-> video here
+https://github.com/BatuhanGumus/Machine-Learning-Self-Driving-Car/assets/45213285/9f08c53b-abe9-4c1f-9148-d1d2b37f7293
 
 > [!WARNING]  
 > I made this game such a long time ago while self-learning machine learning to make a neural network from scratch.
