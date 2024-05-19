@@ -28,7 +28,7 @@ A gamified machine learning experience where the user gets to create a custom tr
 Hyperbolic tangent activation! A range from -1 to 1 felt adequate for gas and break acceleration and steering rotation.
 > graph image here
 ### Scoring
-Passing a green line will add points, wasting time and hitting the wall will remove points.
+Passing a green line will add points, wasting time and hitting the wall will substract points.
 ### Learning Method
 Simple mitotis evolution! Kill the worse performing half and copy and mutate the better performing half.
 
