@@ -26,8 +26,17 @@ https://github.com/BatuhanGumus/Machine-Learning-Self-Driving-Car/assets/4521328
 1) cars acceleration
 2) steering rotation
 ### Activation Method
+
+<img src="https://github.com/BatuhanGumus/Machine-Learning-Self-Driving-Car/assets/45213285/b857c034-cf6d-404c-8655-14bd0f1d02f4" align="right" height="160px">
 Hyperbolic tangent activation! A range from -1 to 1 felt adequate for gas and break acceleration and steering rotation.
-> graph image here
+
+```cs
+private double Activation(double inp)
+{
+  return Math.Tanh(inp); //Hyperbolic tangent activation
+}
+```
+
 ### Scoring
 Passing a green line will add points, wasting time and hitting the wall will substract points.
 ### Learning Method
