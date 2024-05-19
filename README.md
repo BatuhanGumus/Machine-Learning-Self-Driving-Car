@@ -9,7 +9,7 @@ video here
 > I made this game such a long time ago while self-learning machine learning to make a neural network from scratch
 > I can almost guarantee that this will not work in newer Unity versions
 
-## Neural network
+## Machine Learning Details
 ### Inputs
 1) several raycasts from the car to get the distance to walls
 2) cars normalized speed
